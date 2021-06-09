@@ -25,11 +25,7 @@ class BbsAdminWebSecurityConfig : WebSecurityConfigurerAdapter() {
         return BCryptPasswordEncoder()
     }
 
-    /**
-     * WebSecurity
-     * 公式ドキュメントではWebベースのセキュリティを追加できると記載があるが
-     * 実際にはセキュリティをかける必要がないものに対して除外する設定を用いる
-     */
+    /** WebSecurity 公式ドキュメントではWebベースのセキュリティを追加できると記載があるが 実際にはセキュリティをかける必要がないものに対して除外する設定を用いる */
     @Override
     override fun configure(web: WebSecurity) {
         // ここに設定したものはセキュリティ設定を無視
@@ -52,7 +48,10 @@ class BbsAdminWebSecurityConfig : WebSecurityConfigurerAdapter() {
 
         // ログアウト
         http.logout()
+                // Springのログアウト処理はデフォルトでPOSTで行う
+                // GETで行う場合は以下記述が必要
                 .logoutRequestMatcher(AntPathRequestMatcher("/user/logout**"))
+                .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
     }
 

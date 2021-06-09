@@ -46,32 +46,11 @@
 
     <div class="border_line"></div>
 
-    <div class="Area_articles" th:each="article:${articles}" th:object="${article}"></div>
+    <!-- th:replace 指定したフラグメントによる置換を行う -->
+    <span th:replace="fragments/articles::fragment-articles"></span>
 
-    <!-- 投稿記事リスト -->
-    <div class="Area_articles" th:each="article:${articles}" th:object="${article}">
-        <div>
-            <table class="Area_articles_table" border="1">
-                <tr class="Area_article_title">
-                    <td>
-                        <label>
-                            <input type="radio" name="article_check" th:data-id="*{id}" />
-                        </label>
-                    </td>
-                </tr>
-                <tr>
-                    <td th:text="'名前:' + *{name} + ' 投稿日：' + ${#dates.format(article.registerAt,
-                        'yyyy/MM/dd HH:mm:ss')}"></td>
-                </tr>
-                <tr>
-                    <td>
-                        <pre th:text="*{contents}"></pre>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-
+    <!-- ページングのフラグメントを置換 -->
+    <span th:replace="fragments/paging::fragment-article-paging"></span>
     <!-- 記事更新ボタン -->
     <div class="Area_change_article">
         <form th:action="@{/}" th:method="get" name="form_change_article">
